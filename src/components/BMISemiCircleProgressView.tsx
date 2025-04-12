@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
-import Svg, { Path, G } from 'react-native-svg';
+import Svg, { Path, G, Defs, LinearGradient, Stop } from 'react-native-svg';
 import { BMICategory, getBMICategory } from '../utils/BMICalculator';
 import DotIndicatorView from './DotIndicatorView';
 import Colors from '../styles/colors';
@@ -164,6 +164,14 @@ const BMISemiCircleProgressView: React.FC<BMISemiCircleProgressViewProps> = ({
   return (
     <View style={[styles.container, { width, height }]}>
       <Svg width={width} height={height}>
+        <Defs>
+          <LinearGradient id="bmiGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <Stop offset="0%" stopColor={Colors.underweight} />
+            <Stop offset="33%" stopColor={Colors.normal} />
+            <Stop offset="66%" stopColor={Colors.overweight} />
+            <Stop offset="100%" stopColor={Colors.obese} />
+          </LinearGradient>
+        </Defs>
         {/* Render spectrum arcs */}
         <G>
           {renderSpectrumArcs()}
@@ -211,4 +219,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BMISemiCircleProgressView; 
+export default BMISemiCircleProgressView;

@@ -8,7 +8,8 @@ import {
   SafeAreaView,
   Image,
   NativeSyntheticEvent,
-  NativeSegmentedControlIOSChangeEvent
+  NativeSegmentedControlIOSChangeEvent,
+  Animated
 } from 'react-native';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import BMISemiCircleProgressView from '../components/BMISemiCircleProgressView';
@@ -25,6 +26,7 @@ import {
   BMICategory,
   BMICategoryRanges
 } from '../utils/BMICalculator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BMICalculatorScreen: React.FC = () => {
   // Get user data from context
@@ -41,6 +43,8 @@ const BMICalculatorScreen: React.FC = () => {
   const [bmi, setBmi] = useState(0);
   const [showPicker, setShowPicker] = useState(false);
   const [currentAttribute, setCurrentAttribute] = useState<BMIAttribute>('weight');
+  const [theme, setTheme] = useState('light');
+  const [transitionAnim] = useState(new Animated.Value(0));
   
   // Calculate BMI when inputs change
   useEffect(() => {
@@ -115,8 +119,47 @@ const BMICalculatorScreen: React.FC = () => {
     ? `${Math.round(height)} cm` 
     : `${Math.floor(height / 12)}' ${Math.round(height % 12)}"`;
   
+  // Load theme preference from AsyncStorage
+  useEffect(() => {
+    const loadTheme = async () => {
+      try {
+        const savedTheme = await AsyncStorage.getItem('@BMICalculator:theme');
+        if (savedTheme) {
+          setTheme(savedTheme);
+        }
+      } catch (error) {
+        console.error('Error loading theme:', error);
+      }
+    };
+    loadTheme();
+  }, []);
+  
+  // Save theme preference to AsyncStorage
+  const saveTheme = async (selectedTheme: string) => {
+    try {
+      await AsyncStorage.setItem('@BMICalculator:theme', selectedTheme);
+      setTheme(selectedTheme);
+    } catch (error) {
+      console.error('Error saving theme:', error);
+    }
+  };
+  
+  // Handle theme change
+  const handleThemeChange = (selectedTheme: string) => {
+    saveTheme(selectedTheme);
+  };
+  
+  // Animate screen transitions
+  useEffect(() => {
+    Animated.timing(transitionAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+  
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, theme === 'dark' && styles.darkContainer]}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.attributesContainer}>
           {/* Weight Button */}
@@ -238,6 +281,19 @@ const BMICalculatorScreen: React.FC = () => {
             </View>
           ))}
         </TileBackgroundView>
+        
+        {/* Theme Selector */}
+        <View style={styles.themeSelector}>
+          <Text style={styles.themeLabel}>Theme</Text>
+          <SegmentedControl
+            values={['Light', 'Dark']}
+            selectedIndex={theme === 'dark' ? 1 : 0}
+            onChange={(event: NativeSyntheticEvent<NativeSegmentedControlIOSChangeEvent>) => {
+              handleThemeChange(event.nativeEvent.selectedSegmentIndex === 1 ? 'dark' : 'light');
+            }}
+            style={styles.segmentedControl}
+          />
+        </View>
       </ScrollView>
       
       {/* Attribute Picker Modal */}
@@ -259,6 +315,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+  },
+  darkContainer: {
+    backgroundColor: '#333',
   },
   scrollView: {
     flex: 1,
@@ -374,6 +433,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.text,
   },
+  themeSelector: {
+    marginHorizontal: 20,
+    marginBottom: 30,
+  },
+  themeLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 10,
+  },
 });
 
-export default BMICalculatorScreen; 
+export default BMICalculatorScreen;

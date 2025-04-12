@@ -54,8 +54,6 @@ export const loadWeightHistory = async (): Promise<WeightHistory[]> => {
     const jsonValue = await AsyncStorage.getItem(HISTORY_KEY);
     if (jsonValue != null) {
       const history = JSON.parse(jsonValue) as WeightHistory[];
-      // Optional: Sort history by date if needed
-      // history.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
       return history;
     } else {
       return []; // No history saved yet
@@ -106,7 +104,6 @@ export const loadUserSettings = async (): Promise<{
     return DEFAULT_SETTINGS;
   }
 };
-
 
 // Hook for app-wide state management
 export const useUserData = () => {

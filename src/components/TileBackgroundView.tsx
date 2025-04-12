@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TileBackgroundView; 
+export default TileBackgroundView;

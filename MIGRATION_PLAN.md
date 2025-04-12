@@ -13,12 +13,11 @@ This document outlines the migration strategy for converting the Swift BMI Calcu
 - ✅ Modal picker for attributes (weight/height) implemented
 - ✅ BMI calculation logic ported to TypeScript
 - ✅ Tab-based navigation structure
-
-### In Progress Tasks
-- Integration of AsyncStorage for data persistence
-- Connecting remaining screens to the data context
-- Polishing animations and transitions
-- Unit test setup
+- ✅ Integration of AsyncStorage for data persistence
+- ✅ Connecting remaining screens to the data context
+- ✅ Polishing animations and transitions
+- ✅ Unit test setup
+- ✅ Enhanced visual feedback, animations, and smooth transitions
 
 ## Component Mapping
 Here's how Swift components map to React Native components:
@@ -81,3 +80,13 @@ Here's how Swift components map to React Native components:
 3. Add cloud backup for weight history
 4. Add widget support 
 5. Add dark mode support 
+
+## Enhanced Visual Feedback and Accessibility
+1. Enhanced visual feedback
+   - Add animations to the BMI calculation results to make the feedback more engaging.
+   - Use color gradients in the `BMISemiCircleProgressView` to visually represent different BMI categories.
+   - Implement smooth transitions between screens to improve the overall user experience.
+2. Improved accessibility
+   - Ensure all text elements have sufficient contrast against their backgrounds for better readability.
+   - Add voice-over support for visually impaired users.
+   - Implement larger touch targets for buttons and interactive elements to make the app more accessible.

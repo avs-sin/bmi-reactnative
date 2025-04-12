@@ -6,7 +6,8 @@ import {
   StyleSheet, 
   TouchableOpacity, 
   Animated,
-  Platform
+  Platform,
+  AccessibilityInfo
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Colors from '../styles/colors';
@@ -168,6 +169,8 @@ const AttributePickerModal: React.FC<AttributePickerModalProps> = ({
       transparent
       animationType="none"
       onRequestClose={onClose}
+      accessible={true}
+      accessibilityLabel="Attribute Picker Modal"
     >
       <View style={styles.modalContainer}>
         <Animated.View
@@ -194,6 +197,8 @@ const AttributePickerModal: React.FC<AttributePickerModalProps> = ({
                 selectedValue={selectedComponent1}
                 onValueChange={(value: string) => setSelectedComponent1(value)}
                 itemStyle={styles.pickerItem}
+                accessible={true}
+                accessibilityLabel="Picker Component 1"
               >
                 {getPickerItems(0)}
               </Picker>
@@ -205,6 +210,8 @@ const AttributePickerModal: React.FC<AttributePickerModalProps> = ({
                   selectedValue={selectedComponent2}
                   onValueChange={(value: string) => setSelectedComponent2(value)}
                   itemStyle={styles.pickerItem}
+                  accessible={true}
+                  accessibilityLabel="Picker Component 2"
                 >
                   {getPickerItems(1)}
                 </Picker>
@@ -244,6 +251,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '600',
+    color: Colors.text,
   },
   button: {
     padding: 5,
@@ -271,4 +279,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AttributePickerModal; 
+export default AttributePickerModal;

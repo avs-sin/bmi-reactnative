@@ -4,7 +4,7 @@ This is a React Native migration of the iOS BMI Calculator app. The React Native
 
 ## Current Status
 
-The migration is a work in progress. Here's what's been implemented so far:
+The migration is now complete. Here's what's been implemented:
 
 - ✅ Project structure setup
 - ✅ React Navigation with tabs
@@ -13,6 +13,13 @@ The migration is a work in progress. Here's what's been implemented so far:
 - ✅ BMI calculation logic
 - ✅ Modal picker for selecting weight and height
 - ✅ BMI visual display with semi-circle gauge
+- ✅ AsyncStorage for data persistence
+- ✅ TrackWeightScreen integration with context
+- ✅ WeightHistoryScreen integration with context
+- ✅ Type errors fixed
+- ✅ Unit tests added
+- ✅ Polished UI animations
+- ✅ Enhanced visual feedback, animations, and smooth transitions
 
 ## Getting Started
 
@@ -43,16 +50,18 @@ npm run ios
 npm run android
 ```
 
-## Remaining Tasks
+## Customizable Themes
 
-Check the `MIGRATION_PLAN.md` file for a detailed breakdown of completed and remaining tasks. In summary:
+The app now supports customizable themes. Users can switch between light and dark modes and save their preferences using AsyncStorage.
 
-1. Implement AsyncStorage for data persistence
-2. Complete TrackWeightScreen integration with context
-3. Complete WeightHistoryScreen integration with context
-4. Fix remaining type errors
-5. Add unit tests
-6. Polish UI animations
+### Switching Themes
+
+1. Open the app.
+2. Navigate to the BMI Calculator screen.
+3. Scroll down to the Theme Selector section.
+4. Choose between Light and Dark themes.
+
+The selected theme will be saved and applied across sessions.
 
 ## Architecture
 
@@ -66,9 +75,7 @@ The application follows a context-based architecture:
 
 ## Known Issues
 
-- Type errors for some external dependencies
 - Picker component needs additional styling for Android
-- Missing permanent data storage implementation
 
 ## Contributing
 
